@@ -14,34 +14,31 @@ import ProjectModal from "./ProjectModal";
 
 export default function ProjectCard({ project }: { project: Project }) {
   const {
-
-    name,
-    description,
-    stack,
-    liveUrl,
     githubUrl,
-    imageUrl,
-    screenshots,
-    about,
-    keyFeatures,
-    challenges,
-    theme,
+    theme = "cyan",
   } = project;
+
+  const title = project.title || project.name || "";
+  const shortDesc = project.shortDescription || project.description || "";
+  const techStack = project.techStack || project.stack || [];
+  const liveUrl = project.link || project.liveUrl;
 
   const styles = PROJECT_THEME_STYLES[theme] || PROJECT_THEME_STYLES.cyan;
 
   // Gather all available preview images
   const allImages =
-    screenshots && screenshots.length > 0
-      ? screenshots
-      : imageUrl
-        ? [imageUrl]
-        : [];
+    project.details?.images && project.details.images.length > 0
+      ? project.details.images
+      : project.screenshots && project.screenshots.length > 0
+        ? project.screenshots
+        : project.imageUrl
+          ? [project.imageUrl]
+          : [];
 
-  const previewImage = allImages.length > 0 ? allImages[0] : undefined;
+  const previewImage = project.imageUrl || (allImages.length > 0 ? allImages[0] : undefined);
   const hasLiveUrl = Boolean(liveUrl);
   const hasGithubUrl = Boolean(githubUrl);
-  const hasDetailedPreview = allImages.length > 0 || Boolean(about || keyFeatures || challenges);
+  const hasDetailedPreview = allImages.length > 0 || Boolean(project.details || project.about || project.keyFeatures);
 
   return (
     <Dialog>
@@ -59,7 +56,7 @@ export default function ProjectCard({ project }: { project: Project }) {
             <>
               <Image
                 src={previewImage}
-                alt={`${name} preview`}
+                alt={`${title} preview`}
                 fill
                 sizes="(max-width: 768px) 100vw, 33vw"
                 className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
@@ -89,14 +86,13 @@ export default function ProjectCard({ project }: { project: Project }) {
         {/* ── Card Content Body ── */}
         <div className="flex flex-1 flex-col p-6">
           <div className="mb-3.5 flex items-center gap-3">
-
-            <h3 className="text-lg font-bold tracking-tight text-white">{name}</h3>
+            <h3 className="text-lg font-bold tracking-tight text-white">{title}</h3>
           </div>
 
-          <p className="mb-6 flex-1 text-sm leading-relaxed text-slate-400">{description}</p>
+          <p className="mb-6 flex-1 text-sm leading-relaxed text-slate-400">{shortDesc}</p>
 
           <div className="flex flex-wrap gap-2">
-            {stack.map((tech) => (
+            {techStack.map((tech) => (
               <span
                 key={tech}
                 className="rounded-md border border-slate-800 bg-slate-950/70 px-2.5 py-1 font-mono text-xs font-medium text-slate-300"

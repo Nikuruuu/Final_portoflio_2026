@@ -100,15 +100,18 @@ export default function About({ content = ABOUT_CONTENT }: AboutProps) {
               </motion.p>
             ))}
 
-            {/* Value badges using shadcn Badge */}
-            <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-3 pt-2">
+            {/* Value badges using responsive layout */}
+            <motion.div
+              variants={fadeInUp}
+              className="flex flex-wrap items-center gap-2 sm:gap-3 pt-2"
+            >
               {valueBadges.map(({ icon: Icon, label }) => (
                 <Badge
                   key={label}
                   variant="outline"
-                  className="h-auto gap-2.5 rounded-xl border border-slate-800 bg-slate-900/80 px-4 py-2.5 text-sm font-medium text-slate-200 backdrop-blur-sm transition-all hover:border-slate-700 hover:bg-slate-800/90 shadow-sm"
+                  className="h-auto inline-flex items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/80 px-3.5 py-2 sm:px-4 sm:py-2.5 text-xs sm:text-sm font-medium text-slate-200 backdrop-blur-sm transition-all hover:border-slate-700 hover:bg-slate-800/90 shadow-sm"
                 >
-                  <Icon className="h-4 w-4 text-cyan-400 shrink-0" />
+                  <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-cyan-400 shrink-0" />
                   <span>{label}</span>
                 </Badge>
               ))}

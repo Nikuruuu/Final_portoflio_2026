@@ -66,15 +66,15 @@ export default function Contact({ content = CONTACT_CONTENT }: ContactProps) {
         {/* Left-aligned Reach-out card */}
         <motion.div
           variants={fadeInUp}
-          className="max-w-xl rounded-2xl border border-slate-800 bg-slate-900/60 p-8 backdrop-blur-sm shadow-sm text-left"
+          className="w-full max-w-xl rounded-2xl border border-slate-800 bg-slate-900/60 p-5 sm:p-8 backdrop-blur-sm shadow-sm text-left"
         >
           <p className="mb-4 text-xs font-mono uppercase tracking-wider text-slate-500">{emailLabel}</p>
 
-          {/* Email copy-to-clipboard */}
-          <div className="mb-6 flex items-center justify-between gap-3 rounded-xl border border-slate-700/60 bg-slate-800/60 px-5 py-3 shadow-inner">
-            <div className="flex items-center gap-3">
+          {/* Email copy-to-clipboard box */}
+          <div className="mb-6 flex items-center justify-between gap-2 sm:gap-3 rounded-xl border border-slate-700/60 bg-slate-800/60 px-3.5 sm:px-5 py-3 shadow-inner">
+            <div className="flex min-w-0 items-center gap-2.5 sm:gap-3 overflow-hidden">
               <Mail size={16} className="shrink-0 text-cyan-400" />
-              <span id="contact-email" className="font-mono text-sm sm:text-base text-slate-200">
+              <span id="contact-email" className="truncate font-mono text-xs sm:text-sm md:text-base text-slate-200">
                 {email}
               </span>
             </div>
@@ -82,7 +82,7 @@ export default function Contact({ content = CONTACT_CONTENT }: ContactProps) {
               id="copy-email-btn"
               onClick={handleCopy}
               aria-label={copied ? "Email copied" : "Copy email address"}
-              className="rounded-md p-1.5 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white cursor-pointer"
+              className="shrink-0 rounded-md p-1.5 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white cursor-pointer"
             >
               {copied ? (
                 <span className="flex items-center gap-1 text-xs text-emerald-400 font-mono">
@@ -95,7 +95,7 @@ export default function Contact({ content = CONTACT_CONTENT }: ContactProps) {
           </div>
 
           {/* Social links */}
-          <div className="flex flex-wrap items-center justify-start gap-3">
+          <div className="flex flex-wrap items-center justify-start gap-2.5 sm:gap-3">
             {socialLinks.map(({ icon: Icon, href, label }) => (
               <a
                 key={label}

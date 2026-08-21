@@ -60,9 +60,9 @@ export default function Skills({
           </motion.p>
         </motion.div>
 
-        {/* 3-column skills grid */}
+        {/* Responsive skills grid (1 col on mobile, 2 cols on tablet, 4 cols on desktop) */}
         <motion.div
-          className="grid grid-cols-1 gap-6 md:grid-cols-3"
+          className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
           variants={staggerContainer}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
@@ -72,7 +72,7 @@ export default function Skills({
               key={group.id}
               id={group.id}
               variants={scaleIn}
-              className={`rounded-xl border ${group.borderColor} ${group.bgColor} p-6 backdrop-blur-sm`}
+              className={`rounded-xl border ${group.borderColor} ${group.bgColor} p-6 backdrop-blur-sm transition-all hover:border-slate-700/80 hover:shadow-lg`}
             >
               <h3 className={`mb-5 font-mono text-xs font-semibold uppercase tracking-widest ${group.color}`}>
                 {group.category}

@@ -1,20 +1,10 @@
-import {
-  Layers,
-  Activity,
-  Code2,
-  Globe,
-  Server,
-  LayoutGrid,
-  Zap,
-  CircleDot,
-  type LucideIcon,
-} from "lucide-react";
-import { GithubIcon, LinkedinIcon, XTwitterIcon } from "@/lib/icons";
+import { GithubIcon, LinkedinIcon } from "@/lib/icons";
+import { type LucideIcon, LayoutGrid, Zap, CircleDot } from "lucide-react";
 
 // ── Hero Section Data ────────────────────────────────────────────────────────
 
 export interface SocialLink {
-  icon: typeof GithubIcon;
+  icon: typeof GithubIcon | typeof LinkedinIcon;
   href: string;
   label: string;
 }
@@ -50,11 +40,11 @@ export const HERO_CONTENT: HeroContent = {
   },
   headline: {
     title: "Full-Stack Developer",
-    middle: "crafting modern",
-    suffix: "web applications",
+    middle: "Building intuitive, ",
+    suffix: "scalable web apps",
   },
   description:
-    "I design and build modern web applications—merging structural precision and clean UI design with robust backend architecture. Focused on writing clean, maintainable code that solves real problems.",
+    "I design and build modern web applications with a focus on solid engineering, clean user interfaces, and scalable backend systems. I leverage AI tools alongside my programming skills to improve my workflow, solve problems, and turn ideas into reliable digital products",
   cta: {
     primary: {
       text: "View Projects",
@@ -66,9 +56,8 @@ export const HERO_CONTENT: HeroContent = {
     },
   },
   socialLinks: [
-    { icon: GithubIcon, href: "https://github.com", label: "GitHub" },
-    { icon: LinkedinIcon, href: "https://linkedin.com", label: "LinkedIn" },
-    { icon: XTwitterIcon, href: "https://twitter.com", label: "Twitter / X" },
+    { icon: GithubIcon, href: "https://github.com/Nikuruuu", label: "GitHub" },
+    { icon: LinkedinIcon, href: "https://www.linkedin.com/in/jeremiah-dela-cruz/", label: "LinkedIn" },
   ],
 };
 
@@ -97,12 +86,13 @@ export interface AboutContent {
 export const ABOUT_CONTENT: AboutContent = {
   tag: "// ABOUT ME",
   headline: {
-    prefix: "Building modern web applications with focus on ",
-    highlight: "precision.",
+    prefix: "Fullstack Web Development & AI-Powered ",
+    highlight: "Tools.",
   },
   paragraphs: [
-    "I'm Jeremiah Dela Cruz, a BS Information Technology graduate and Full-Stack Web Developer based in the Philippines. I build fast, responsive web applications combining clean user interfaces with reliable backends. My core stack centers on React, Next.js, Node.js, Tailwind CSS, and Prisma.",
-    "My approach is simple: write clean, maintainable code, build intuitive components, and ensure performance and user experience are never treated as afterthoughts.",
+    "I'm Jeremiah Dela Cruz, an aspiring Fullstack Web Developer passionate about building intuitive and scalable web applications. With a strong foundation in problem-solving and user-centric design, I enjoy creating seamless digital experiences that are both functional and visually engaging.",
+    "As I continue to grow in web development, I've worked on projects involving SaaS applications, AI-powered tools, and dynamic web solutions, allowing me to refine my skills and adapt to different challenges. I'm always eager to learn new technologies, improve my craft, and collaborate on meaningful projects.",
+    "Excited to bring ideas to life through code and contribute to innovative solutions!",
   ],
   image: {
     src: "/jpd.png",
@@ -118,139 +108,272 @@ export const ABOUT_CONTENT: AboutContent = {
 
 // ── Projects Section Data ───────────────────────────────────────────────────
 
-export interface Project {
-  id: string;
-  name: string;
-  description: string;
-  stack: string[];
-  liveUrl?: string;
-  githubUrl?: string;
-  imageUrl?: string;        // Primary banner/thumbnail image
-  screenshots?: string[];   // Array of full screenshots for the Carousel
-  about?: string;           // Detailed project background & problem statement
-  keyFeatures?: string[];   // Bullet points of key technical features
-  challenges?: string;      // Challenges overcome during architecture/development
-  outcome?: string;         // Results, metrics, performance gains, or impact
-  theme: "cyan" | "purple" | "emerald" | "amber";
+export interface ProjectDetails {
+  description?: string;
+  features?: string[];
+  images?: string[];
+  challenges?: string[];
+  outcomes?: string[];
 }
 
-export const FEATURED_PROJECTS: Project[] = [
+export interface Project {
+  id: string | number;
+  title: string;
+  shortDescription?: string;
+  description: string;
+  techStack: string[];
+  imageUrl?: string;
+  link?: string;
+  githubUrl?: string;
+  details?: ProjectDetails;
+  theme?: "cyan" | "purple" | "emerald" | "amber";
+  // Optional convenience aliases
+  name?: string;
+  stack?: string[];
+  liveUrl?: string;
+  screenshots?: string[];
+  about?: string;
+  keyFeatures?: string[];
+  challenges?: string | string[];
+  outcome?: string | string[];
+}
+
+export const ProjectsData: Project[] = [
   {
-    id: "atlas-cms",
-    name: "Atlas CMS",
+    id: 1,
+    title: "JobHive",
+    shortDescription:
+      "Landing page for a modern job board platform with sleek and animated UI.",
     description:
-      "Headless content management system with a real-time collaborative editor, role-based access control, and a GraphQL API powering multi-tenant publishing workflows.",
-    stack: ["Next.js", "TypeScript", "GraphQL", "PostgreSQL", "Redis"],
-    liveUrl: "https://example.com",
-    githubUrl: "https://github.com",
-    imageUrl: "/portrait.jpg",
-    screenshots: ["/portrait.jpg", "/jpd.png"],
-    about:
-      "Atlas CMS was engineered to provide high-growth publishing teams with a decoupled, sub-second headless authoring experience. It separates content creation from frontend presentation through automated schema generation and real-time synchronization.",
-    keyFeatures: [
-      "Real-time multiplayer content editing using CRDTs and WebSocket relays",
-      "Dynamic GraphQL & REST API generation with granular field-level permissions",
-      "Edge caching layer with automated Redis tag-invalidation on publish",
-      "Role-based access control (RBAC) supporting multi-tenant enterprise teams",
-    ],
-    challenges:
-      "Managing high-concurrency document edits without locking the database required designing an in-memory Operational Transformation pipeline backed by Redis before persisting to PostgreSQL.",
-    outcome:
-      "Reduced content publish-to-edge latency by 65% and supported 50+ concurrent editors per workspace with zero data collisions.",
-    theme: "cyan",
-  },
-  {
-    id: "meridian-analytics",
-    name: "Meridian Analytics",
-    description:
-      "Real-time data pipeline dashboard with streaming event ingestion, interactive time-series charts, and anomaly detection alerts via WebSockets.",
-    stack: ["React", "Rust", "ClickHouse", "Kafka", "D3.js"],
-    githubUrl: "https://github.com",
-    imageUrl: "/jpd.png",
-    screenshots: ["/jpd.png", "/portrait.jpg"],
-    about:
-      "Meridian Analytics is an observability and event-tracking platform designed to process billions of user interaction logs daily, transforming raw telemetric data into actionable time-series visualizations.",
-    keyFeatures: [
-      "Sub-second aggregation queries across 100M+ rows via ClickHouse columnar storage",
-      "Interactive SVG time-series charts with pan, zoom, and dynamic interval clustering in D3.js",
-      "Real-time anomaly detection daemon built with Rust and Kafka consumers",
-      "Custom query builder supporting SQL filters, regex matching, and cohort slicing",
-    ],
-    challenges:
-      "Rendering 50,000+ data points smoothly in the browser required offloading math transformations to Web Workers and implementing WebGL canvas downsampling.",
-    outcome:
-      "Achieved stable 60fps chart interactions on large data volumes and dropped server ingest processing costs by 40% using Rust workers.",
-    theme: "purple",
-  },
-  {
-    id: "forge-cli",
-    name: "Forge CLI",
-    description:
-      "Extensible developer toolchain for scaffolding full-stack projects with opinionated defaults, plugin ecosystem, and zero-config deployments to major cloud providers.",
-    stack: ["Node.js", "Go", "Docker", "Terraform", "GitHub Actions"],
-    liveUrl: "https://example.com",
-    githubUrl: "https://github.com",
-    about:
-      "Forge CLI is a developer experience engine built to eliminate boilerplate and standardize microservice infrastructure across engineering teams through automated code generation and IaC scaffolding.",
-    keyFeatures: [
-      "Interactive terminal UI with smart scaffolding presets for Next.js, Go, and Fastify",
-      "Integrated Docker and Terraform generation tailored to AWS, GCP, and Railway",
-      "Zero-config CI/CD workflow generator with automated lint, test, and preview pipelines",
-      "Pluggable architecture allowing custom enterprise templates and policy checks",
-    ],
-    challenges:
-      "Ensuring cross-platform binary execution speed on macOS, Linux, and Windows required compiling core CLI engines in Go with automated release pipelines.",
-    outcome:
-      "Saved developer onboarding time by over 80% and adopted by 500+ developers within open-source dev communities.",
-    theme: "emerald",
-  },
-  {
-    id: "pulse-gateway",
-    name: "Pulse Gateway",
-    description:
-      "High-throughput API gateway with automatic rate limiting, distributed JWT authentication, and sub-millisecond edge routing for microservices.",
-    stack: ["TypeScript", "Fastify", "Redis", "Docker", "Grafana"],
-    githubUrl: "https://github.com",
-    about:
-      "Pulse Gateway acts as the secure entry point for distributed microservices, managing rate limits, request authentication, header transformations, and real-time distributed telemetry.",
-    keyFeatures: [
-      "Token-bucket rate limiting backed by distributed Redis clusters",
-      "Sub-millisecond routing overhead powered by Fastify and optimized V8 execution paths",
-      "Automated OpenTelemetry tracing exports to Prometheus and Grafana",
-      "Dynamic hot-reloading routing table without service restarts",
-    ],
-    challenges:
-      "Preventing cache stampedes under sudden traffic spikes required implementing sliding-window rate limit algorithms with local memory pre-checks.",
-    outcome:
-      "Sustained 45,000 req/sec at under 2ms p99 latency with automated zero-downtime rolling upgrades.",
+      "A landing page built to present the concept of JobHive, a curated job board platform. Designed with smooth animations and clean layouts for an engaging first impression.",
+    techStack: ["Next.js", "Tailwind CSS", "shadcn", "Framer Motion", "Lottie"],
+    imageUrl:
+      "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Jobhive/jobhive1.png",
     theme: "amber",
+    details: {
+      description:
+        "JobHive is a landing page designed to showcase the idea of a modern job board. It highlights the platform's value through engaging visuals, responsive layouts, and interactive animations. The page focuses on presentation and branding rather than full job board functionality.",
+      features: [
+        "Landing page design with Next.js and Tailwind CSS",
+        "Reusable UI components from shadcn",
+        "Smooth animations using Framer Motion",
+        "Lottie animations for enhanced visual appeal",
+        "Responsive layouts optimized for all devices",
+        "Metadata optimization for SEO and branding",
+      ],
+      images: [
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Jobhive/jobhive1.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Jobhive/jobhive2.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Jobhive/jobhive3.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Jobhive/jobhive4.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Jobhive/jobhive5.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Jobhive/jobhive6.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Jobhive/jobhive7.png",
+      ],
+      challenges: [
+        "Designing a landing page that looks functional without backend features",
+        "Balancing animations with performance for a smooth UX",
+        "Keeping the design consistent with shadcn components",
+      ],
+      outcomes: [
+        "Created a polished and modern landing page for JobHive",
+        "Delivered a visually engaging concept for a future job board platform",
+        "Provided a scalable foundation for adding functionality later",
+      ],
+    },
+    link: "https://jobhive.jeremiahdelacruz.com/",
+  },
+
+  {
+    id: 2,
+    title: "Health & Nutrition Management System",
+    shortDescription:
+      "A capstone project developed for Don Juan Dela Cruz Elementary School to manage student health and nutrition programs.",
+    description:
+      "A full-stack system that helps the school clinic and staff manage clinic visits, feeding programs, medicine inventory, and student health records.",
+    techStack: ["React", "Material UI", "Express.js", "MongoDB", "Node.js"],
+    imageUrl:
+      "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Adcor/image%2810%29-3B8doBeoA2HsEHhHcVvQkf7d6avNoW.png",
+    theme: "emerald",
+    details: {
+      description:
+        "This capstone system was built to streamline the health and nutrition tracking for an elementary school. It allows clinic staff to track clinic visits, manage medicine inventory (with batch expiration tracking), and monitor students eligible for feeding programs. It also includes analytics, logs, and user roles for better school-wide health data governance.",
+      features: [
+        "User authentication with role-based access (admin, clinic staff, etc.)",
+        "Student database management (2,400+ records)",
+        "Clinic visit logging and statistics tracking",
+        "Medicine inventory with batch tracking and expiration alerts",
+        "Feeding program eligibility monitoring",
+        "Analytics and activity logs",
+        "School year selector for filtering records",
+      ],
+      images: [
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Adcor/image%281%29-zCJc0YXXpaFTjLo12DasU1OJP0BbFx.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Adcor/image%2810%29-3B8doBeoA2HsEHhHcVvQkf7d6avNoW.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Adcor/image%2811%29-oQxLH7FkNL2WKqEd1zYRVViEzZr9rZ.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Adcor/image%282%29-IUGn3GOSLTHV55xExBelXViZFsLagB.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Adcor/image%283%29-gMM1PMhcHAiT4Emtj1fF8QVFCOgi6H.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Adcor/image%284%29-KyGtUVKunFHEYygEuwPBh56Zs2I3ql.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Adcor/image%285%29-gWtC3fXVVqxuF1T20QZshVINnJVYZn.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Adcor/image%286%29-MUMHkhAeyROEUIXA29UQLs9MqYz4sz.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Adcor/image%287%29-yfegHSI1ml3mHPy9ir4zmTXPQiaOvU.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Adcor/image%288%29-Kve0eVFabckInG0aamcKhNOid9Fr39.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Adcor/image%289%29-EJ42Jez8S9qTlPpA6QcbIpzPpJMzQ4.png",
+      ],
+      challenges: [
+        "Creating a scalable MongoDB schema to handle student health and medicine records",
+        "Designing an intuitive UI for clinic staff with minimal training",
+        "Implementing accurate medicine expiration tracking and filtering",
+      ],
+      outcomes: [
+        "Streamlined the health and feeding program processes for 2,400+ students",
+        "Improved inventory tracking and reduced expired medicine waste",
+        "Enabled non-technical school staff to manage records with ease",
+      ],
+    },
   },
   {
-    id: "nova-canvas",
-    name: "Nova Canvas",
+    id: 3,
+    title: "DeepLogo AI",
+    shortDescription:
+      "AI-powered logo generator for unique and professional branding.",
     description:
-      "Collaborative infinite-canvas workspace featuring multiplayer CRDT sync, vector rendering, export pipelines, and customizable node plugins.",
-    stack: ["Next.js", "WebSockets", "Tailwind CSS", "Canvas API"],
-    liveUrl: "https://example.com",
-    githubUrl: "https://github.com",
-    about:
-      "Nova Canvas is a lightweight, cloud-based visual ideation tool engineered for architecture diagrams, wireframes, and collaborative system design.",
-    keyFeatures: [
-      "High-performance 2D canvas rendering supporting 10,000+ interactive nodes",
-      "Live cursor presence and multiplayer synchronization via WebSockets",
-      "Vector export engine with PNG, SVG, and JSON layout serializers",
-      "Keyboard shortcut engine with custom node snapping and smart alignment guides",
+      "An AI-powered tool that generates unique and professional logos based on user input. Built with modern web technologies for seamless performance.",
+    techStack: [
+      "Next.js",
+      "shadcn",
+      "Clerk",
+      "NeonDB",
+      "Firebase",
+      "Replicate AI",
     ],
-    challenges:
-      "Balancing crisp vector crispness with complex multiplayer state mutations required quad-tree spatial partitioning to optimize render passes.",
-    outcome:
-      "Supported buttery-smooth 120Hz canvas rendering on high-refresh displays with instant collaborative sync across devices.",
+    imageUrl:
+      "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/DeepLogoAI/deepAI1.PNG",
     theme: "cyan",
+    details: {
+      description:
+        "DeepLogo AI is a web application that allows users to generate professional logos using AI. It simplifies the branding process by transforming short prompts into logo visuals. Users receive downloadable logo outputs in seconds, making it ideal for startups, freelancers, and designers.",
+      features: [
+        "Prompt-based logo generation powered by Replicate AI",
+        "User authentication using Clerk",
+        "Credit-based generation system with Firebase",
+        "Responsive UI built with shadcn and Tailwind CSS",
+        "Logo download functionality",
+        "Admin access for managing credits and monitoring usage",
+      ],
+      images: [
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/DeepLogoAI/deepAI1.PNG",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/DeepLogoAI/DeepLogo2.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/DeepLogoAI/deeplogo3.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/DeepLogoAI/deeplogo5.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/DeepLogoAI/deeplogo6.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/DeepLogoAI/deeplogo7.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/DeepLogoAI/deeplogo8.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/DeepLogoAI/deeplogo9.png",
+      ],
+      challenges: [
+        "Integrating Replicate AI for stable image output",
+        "Handling user authentication securely with Clerk",
+        "Building a flexible credit system with Firebase",
+      ],
+      outcomes: [
+        "Enabled users to generate and download logos within seconds",
+        "Improved logo quality and brand relevance using prompt-based input",
+        "Reduced friction in the branding process for non-designers",
+      ],
+    },
+  },
+  {
+    id: 4,
+    title: "Soulitude",
+    shortDescription:
+      "Figma UI design for a social music player connecting artists and listeners.",
+    description:
+      "A high-fidelity Figma UI design for Soulitude, a music platform where users can stream songs, interact with artists, and view daily top tracks.",
+    techStack: ["Figma", "UI/UX Design", "Prototyping"],
+    imageUrl:
+      "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Soulitude/thumbnail.png",
+    theme: "purple",
+    details: {
+      description:
+        "Soulitude focuses on user-friendly design and artist-listener interaction. The UI includes music streaming pages, comment sections, artist profiles, and dynamic top charts.",
+      features: [
+        "Interactive homepage with trending songs",
+        "Clean music player interface with queue and playback controls",
+        "Comment section under each track",
+        "Artist and listener profile views",
+        "Daily top charts with filter options",
+        "Artist can interact to fans",
+        "Prototype-ready design with navigation flows",
+      ],
+      images: [
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Soulitude/thumbnail.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Soulitude/soul_1.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/Soulitude/soul_2.png",
+
+      ],
+      challenges: [
+        "Balancing feature-rich UI with simplicity",
+        "Designing intuitive flows for both artists and users",
+        "Creating a consistent design system for music-based interactions",
+      ],
+      outcomes: [
+        "Delivered a complete UI kit for a music interaction platform",
+        "Improved usability through user-centric design decisions",
+        "Prepared for seamless developer handoff with clear component structure",
+      ],
+    },
+  },
+
+  {
+    id: 5,
+    title: "Architectura",
+    shortDescription:
+      "A high-end architectural firm portfolio showcasing modern residential, commercial, and urban planning projects with raw industrial aesthetics.",
+    description:
+      "A modern, high-end web portfolio designed for an architectural firm. It features industrial minimalism, responsive layouts, interactive services breakdown, and a selected works showcase.",
+    techStack: ["Next.js", "React.js", "Tailwind CSS", "shadcn/ui", "Lucide Icons"],
+    imageUrl: "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/architectu_firm/Thumbnail.png",
+    theme: "cyan",
+    details: {
+      description:
+        "Architectura focuses on minimalist industrial design and bespoke architecture presentation. The web app includes interactive service catalogs, curated project galleries, philosophy breakdown, and an intuitive project consultation inquiry flow.",
+      features: [
+        "Minimalist industrial aesthetic with high-impact typography",
+        "Selected works gallery with category filtering (Residential, Commercial)",
+        "Interactive expertise and architectural service breakdowns",
+        "Methodology and continuum delivery workflow section",
+        "Interactive project inquiry and consultation form",
+        "Full mobile-responsive layout with smooth glassmorphism navigation",
+      ],
+      images: [
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/architectu_firm/Thumbnail.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/architectu_firm/arch_2.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/architectu_firm/arch_3.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/architectu_firm/arch_4.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/architectu_firm/arch_5.png",
+        "https://v2fb8mgxei4hfyfe.public.blob.vercel-storage.com/architectu_firm/arch_6.png",
+
+      ],
+      challenges: [
+        "Crafting high-contrast editorial typography and raw industrial design while maintaining optimal readability",
+        "Building responsive full-screen hero and portfolio grids with smooth transitions",
+        "Structuring modular component architecture with shadcn and Tailwind CSS",
+      ],
+      outcomes: [
+        "Delivered an editorial-grade web experience tailored for architecture clients",
+        "Implemented clean responsive navigation and interactive project showcases",
+        "Established a flexible foundation for showcasing architectural case studies",
+      ],
+    },
+    link: "https://architect.jeremiahdelacruz.com/",
   },
 ];
 
+export const FEATURED_PROJECTS = ProjectsData;
+
 export const PROJECT_THEME_STYLES: Record<
-  Project["theme"],
+  "cyan" | "purple" | "emerald" | "amber",
   {
     bannerGradient: string;
     borderGlow: string;
@@ -300,6 +423,31 @@ export interface SkillGroup {
   skills: SkillItem[];
 }
 
+export const TechStack = {
+  frontend: ["Next.js", "React.js", "Tailwind CSS", "Typescript", "shadcn/ui"],
+  backend: [
+    "Node.js",
+    "Express.js",
+    "MongoDB",
+    "Python",
+    "PostgreSQL",
+    "REST",
+    "JWT",
+    "FastAPI",
+  ],
+  tools: [
+    "Git",
+    "GitHub",
+    "VS Code",
+    "Postman",
+    "Figma",
+    "Vite",
+    "Discord",
+    "Teams",
+  ],
+  services: ["Firebase", "Clerk", "Vercel", "Replicate", "Supabase"],
+};
+
 export const SKILL_GROUPS: SkillGroup[] = [
   {
     id: "frontend-skills",
@@ -308,14 +456,7 @@ export const SKILL_GROUPS: SkillGroup[] = [
     borderColor: "border-cyan-500/20",
     bgColor: "bg-cyan-500/5",
     dotColor: "bg-cyan-400",
-    skills: [
-      { name: "React / Next.js" },
-      { name: "TypeScript" },
-      { name: "Tailwind CSS" },
-      { name: "Framer Motion" },
-      { name: "HTML & CSS" },
-      { name: "Mobile responsive" },
-    ],
+    skills: TechStack.frontend.map((name) => ({ name })),
   },
   {
     id: "backend-skills",
@@ -324,30 +465,25 @@ export const SKILL_GROUPS: SkillGroup[] = [
     borderColor: "border-violet-500/20",
     bgColor: "bg-violet-500/5",
     dotColor: "bg-violet-400",
-    skills: [
-      { name: "Node.js" },
-      { name: "Express / Fastify" },
-      { name: "PostgreSQL" },
-      { name: "Prisma ORM" },
-      { name: "Redis" },
-      { name: "REST & GraphQL" },
-    ],
+    skills: TechStack.backend.map((name) => ({ name })),
   },
   {
-    id: "devops-skills",
-    category: "Tools & DevOps",
+    id: "tools-skills",
+    category: "Tools",
     color: "text-emerald-400",
     borderColor: "border-emerald-500/20",
     bgColor: "bg-emerald-500/5",
     dotColor: "bg-emerald-400",
-    skills: [
-      { name: "Git & GitHub" },
-      { name: "Docker" },
-      { name: "Vercel / Railway" },
-      { name: "CI/CD Pipelines" },
-      { name: "Linux / Bash" },
-      { name: "Figma" },
-    ],
+    skills: TechStack.tools.map((name) => ({ name })),
+  },
+  {
+    id: "services-skills",
+    category: "Services",
+    color: "text-amber-400",
+    borderColor: "border-amber-500/20",
+    bgColor: "bg-amber-500/5",
+    dotColor: "bg-amber-400",
+    skills: TechStack.services.map((name) => ({ name })),
   },
 ];
 
@@ -380,9 +516,8 @@ export const CONTACT_CONTENT: ContactContent = {
   email: "zeremiahdelacruz@gmail.com",
   emailLabel: "Direct Email",
   socialLinks: [
-    { icon: GithubIcon, href: "https://github.com", label: "GitHub" },
-    { icon: LinkedinIcon, href: "https://linkedin.com", label: "LinkedIn" },
-    { icon: XTwitterIcon, href: "https://twitter.com", label: "X" },
+    { icon: GithubIcon, href: "https://github.com/Nikuruuu", label: "GitHub" },
+    { icon: LinkedinIcon, href: "https://www.linkedin.com/in/jeremiah-dela-cruz/", label: "LinkedIn" },
   ],
   footer: {
     author: "Jeremiah Dela Cruz. All rights reserved.",

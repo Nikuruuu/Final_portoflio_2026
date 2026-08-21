@@ -30,17 +30,16 @@ interface ProjectModalProps {
 }
 
 export default function ProjectModal({ project, allImages }: ProjectModalProps) {
-  const {
-    name,
-    description,
-    stack,
-    liveUrl,
-    githubUrl,
-    about,
-    keyFeatures,
-    challenges,
-    outcome,
-  } = project;
+  const title = project.title || project.name || "";
+  const description = project.description || project.shortDescription || "";
+  const techStack = project.techStack || project.stack || [];
+  const liveUrl = project.link || project.liveUrl;
+  const githubUrl = project.githubUrl;
+
+  const about = project.details?.description || project.about;
+  const keyFeatures = project.details?.features || project.keyFeatures || [];
+  const challenges = project.details?.challenges || project.challenges;
+  const outcomes = project.details?.outcomes || project.outcome;
 
   return (
     <DialogContent className="fixed inset-0 top-0 left-0 z-50 block h-screen w-screen !max-w-none max-h-none translate-x-0 translate-y-0 overflow-y-auto border-0 bg-slate-950 px-6 pt-10 sm:px-10 sm:pt-14 pb-28 sm:pb-36 text-slate-100 rounded-none ring-0 data-open:zoom-in-100 data-closed:zoom-out-100">
@@ -52,7 +51,7 @@ export default function ProjectModal({ project, allImages }: ProjectModalProps) 
             <div className="flex items-start gap-4">
               <div>
                 <DialogTitle className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-                  {name}
+                  {title}
                 </DialogTitle>
                 <DialogDescription className="text-sm sm:text-base text-slate-400 mt-1 max-w-2xl leading-relaxed">
                   {description}
@@ -89,7 +88,7 @@ export default function ProjectModal({ project, allImages }: ProjectModalProps) 
 
           {/* ── Tech Stack Badges ── */}
           <div className="flex flex-wrap gap-2 pt-2">
-            {stack.map((tech) => (
+            {techStack.map((tech) => (
               <Badge
                 key={tech}
                 variant="outline"
@@ -112,7 +111,7 @@ export default function ProjectModal({ project, allImages }: ProjectModalProps) 
                       <div className="relative aspect-[16/9] sm:aspect-[21/10] w-full overflow-hidden rounded-2xl border border-slate-800/90 bg-slate-900 shadow-2xl">
                         <Image
                           src={imgSrc}
-                          alt={`${name} screenshot ${index + 1}`}
+                          alt={`${title} screenshot ${index + 1}`}
                           fill
                           sizes="(max-width: 1200px) 100vw, 1080px"
                           className="object-cover object-top"
@@ -129,7 +128,7 @@ export default function ProjectModal({ project, allImages }: ProjectModalProps) 
               <div className="relative aspect-[16/9] sm:aspect-[21/10] w-full overflow-hidden rounded-2xl border border-slate-800/90 bg-slate-900 shadow-2xl">
                 <Image
                   src={allImages[0]}
-                  alt={`${name} screenshot`}
+                  alt={`${title} screenshot`}
                   fill
                   sizes="(max-width: 1200px) 100vw, 1080px"
                   className="object-cover object-top"
@@ -176,25 +175,47 @@ export default function ProjectModal({ project, allImages }: ProjectModalProps) 
           )}
 
           {/* 3. Technical Challenges & Outcome Cards */}
-          {(challenges || outcome) && (
+          {(challenges || outcomes) && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {challenges && (
                 <div className="rounded-2xl border border-slate-800/90 bg-slate-900/60 p-5 shadow-sm">
-                  <h5 className="font-mono text-xs uppercase tracking-wider text-amber-400 mb-2 flex items-center gap-1.5">
+                  <h5 className="font-mono text-xs uppercase tracking-wider text-amber-400 mb-3 flex items-center gap-1.5">
                     <AlertCircle size={15} />
                     <span>Technical Challenges</span>
                   </h5>
-                  <p className="text-sm leading-relaxed text-slate-300">{challenges}</p>
+                  {Array.isArray(challenges) ? (
+                    <ul className="space-y-2">
+                      {challenges.map((c, i) => (
+                        <li key={i} className="text-sm leading-relaxed text-slate-300 flex items-start gap-2">
+                          <span className="text-amber-400 font-bold">•</span>
+                          <span>{c}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-sm leading-relaxed text-slate-300">{challenges}</p>
+                  )}
                 </div>
               )}
 
-              {outcome && (
+              {outcomes && (
                 <div className="rounded-2xl border border-emerald-500/20 bg-emerald-950/20 p-5 shadow-sm">
-                  <h5 className="font-mono text-xs uppercase tracking-wider text-emerald-400 mb-2 flex items-center gap-1.5">
+                  <h5 className="font-mono text-xs uppercase tracking-wider text-emerald-400 mb-3 flex items-center gap-1.5">
                     <CheckCircle2 size={15} />
                     <span>Outcome &amp; Impact</span>
                   </h5>
-                  <p className="text-sm leading-relaxed text-slate-200">{outcome}</p>
+                  {Array.isArray(outcomes) ? (
+                    <ul className="space-y-2">
+                      {outcomes.map((o, i) => (
+                        <li key={i} className="text-sm leading-relaxed text-slate-200 flex items-start gap-2">
+                          <span className="text-emerald-400 font-bold">•</span>
+                          <span>{o}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-sm leading-relaxed text-slate-200">{outcomes}</p>
+                  )}
                 </div>
               )}
             </div>

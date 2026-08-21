@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const inter = Inter({
@@ -12,21 +12,16 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Your Name — Full-Stack Engineer",
+  title: "Jeremiah Dela Cruz — Full-Stack Developer",
   description:
-    "Full-Stack Engineer crafting fast, elegant, and accessible web experiences. Specialising in Next.js, TypeScript, and modern backend systems.",
-  keywords: ["portfolio", "full-stack", "developer", "Next.js", "TypeScript", "React"],
-  authors: [{ name: "Your Name" }],
+    "Showcasing my projects, skills, and experience in web development, AI, and software engineering. Let's build something amazing together!",
+  keywords: ["portfolio", "full-stack", "developer", "Next.js", "TypeScript", "React", "Jeremiah Dela Cruz"],
+  authors: [{ name: "Jeremiah Dela Cruz" }],
   openGraph: {
-    title: "Your Name — Full-Stack Engineer",
+    title: "Jeremiah Dela Cruz — Full-Stack Developer",
     description:
-      "Full-Stack Engineer crafting fast, elegant, and accessible web experiences.",
+      "Showcasing my projects, skills, and experience in web development, AI, and software engineering. Let's build something amazing together!",
     type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Your Name — Full-Stack Engineer",
-    description: "Full-Stack Engineer crafting fast, elegant, and accessible web experiences.",
   },
 };
 
